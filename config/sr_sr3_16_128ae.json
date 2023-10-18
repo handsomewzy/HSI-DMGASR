@@ -1,0 +1,133 @@
+{
+    "name": "Pav3-srae",
+    "phase": "train", // train or val
+    "gpu_ids": [
+        4,5,6,7
+        // 0,1,2,3
+    ],
+    "path": { //set the path
+        "log": "logs",
+        "tb_logger": "tb_logger",
+        "results": "results",
+        "checkpoint": "checkpoint",
+        // 注意注意，这里读取的时候，不要带后面的-opt。pth，不然就是读不进去的。因为定义里面定义好了对应的后缀。只写前面的就好
+        "resume_state": "16_128_I640000_E37" // 这是提供的预训练模型
+        // "resume_state": "experiments/Pav4_sr3-gae_230625_160237/checkpoint/I5200_E520"
+        // "resume_state": "experiments/Pav2_sr3-gae_230620_161658/checkpoint/I5050_E253"
+        // "resume_state": "experiments/Pav3_sr3-gae_230620_174747/checkpoint/I1300_E65"
+
+        // "resume_state": "experiments/Chi4_sr3-gae_230625_160439/checkpoint/I4200_E350"
+        // "resume_state": "experiments/Chi2_sr3-gae_230622_013315/checkpoint/I16500_E688"
+        // "resume_state": "experiments/Chi3_sr3-gae_230621_174301/checkpoint/I8100_E338"
+
+        // "resume_state": "experiments/Har4_sr3-gae_230627_165759/checkpoint/I2000_E50"
+        // "resume_state": "experiments/Har4_sr3-gae_230627_165759/checkpoint/I2000_E50"
+        // "resume_state": "experiments/Har4_sr3-gae_230627_165759/checkpoint/I2000_E50"
+
+
+
+
+        // 下面的都是四倍多一些指标
+        // "resume_state": "experiments/sr_harvard_[3,13,23]_230512_164231/checkpoint/I200000_E236"
+        // "resume_state": null
+        // "resume_state": "16_128_I640000_E37" // 这是提供的预训练模型
+        // "resume_state": "experiment_4/Chi_GAEDAQ_230615_182613/checkpoint/I2700_E11"
+        // "resume_state": "experiments_4/Pav_srgae_train_230613_183828/checkpoint/I15800_E51"
+        // "resume_state": "experiments_4/Pav_srgae_train_230607_175914/checkpoint/I500_E4"
+        //  "resume_state": "experiments_4/Har_srgae_train_230609_161305/checkpoint/I22300_E14"
+        // "resume_state": "experiments_4/Har_GAEDAQ_train_230615_142650/checkpoint/I1000_E1"//
+        // "resume_state": "experiments_4/Har_srgae_train_230614_142118/checkpoint/I500_E1"
+
+
+        // 下面的都是旧模型，都先弃用，因为数据集处理方式改变了
+        // "resume_state": "experiments/sr_finetuneAE_test_230517_192756/checkpoint/I60000_E71" // pretrain model or training state 这是第一版AE
+        // "resume_state": "experiments_old/sr_VGGSAM1_test_230519_180355/checkpoint/I200000_E236"
+        // "resume_state": "experiments/sr_VGGSAM2_train_230523_093819/checkpoint/I20000_E24"
+        // "resume_state": "experiments/Har_srgae_train_230529_143356/checkpoint/I5000_E2"
+        // "resume_state": "experiments/Chi_srgae_train_230530_165824/checkpoint/I19000_E150"
+        
+    },
+    "datasets": {
+        "train": {
+            "name": "FFHQ",
+            "mode": "HR", // whether need LR img
+            "dataroot": "/mnt_det/yingtian.ldy/data/SR_2m-GF",
+            "list_file": "all_1per_train_list.txt",
+            "datatype": "img", //lmdb or img, path of img files
+            "l_resolution": 16, // low resolution need to super_resolution
+            "r_resolution": 128, // high resolution
+            "batch_size": 32,
+            "num_workers": 32,
+            "use_shuffle": true,
+            "data_len": -1 // -1 represents all data used in train
+        },
+        "val": {
+            "name": "CelebaHQ",
+            "mode": "HR",
+            "dataroot": "/mnt_det/yingtian.ldy/data/SR_2m-GF",
+            "list_file": "all_1per_val_list.txt",
+            "datatype": "img", //lmdb or img, path of img files
+            "l_resolution": 16,
+            "r_resolution": 128,
+            "data_len": 50 // data length in validation 
+        }
+    },
+    "model": {
+        "which_model_G": "sr3", // use the ddpm or sr3 network structure
+        "finetune_norm": false,
+        "unet": {
+            "in_channel": 6,
+            "out_channel": 3,
+            "inner_channel": 64,
+            "channel_multiplier": [
+                1,
+                2,
+                4,
+                8,
+                8
+            ],
+            "attn_res": [
+                16
+            ],
+            "res_blocks": 2,
+            "dropout": 0.2
+        },
+        "beta_schedule": { // use munual beta_schedule for acceleration
+            "train": {
+                "schedule": "cosine",
+                "n_timestep": 20,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            },
+            "val": {
+                "schedule": "cosine",
+                "n_timestep": 20,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            }
+        },
+        "diffusion": {
+            "image_size": 128,
+            "channels": 3, //sample channel
+            "conditional": true // unconditional generation or unconditional generation(super_resolution)
+        }
+    },
+    "train": {
+        "n_iter": 200000,
+        "val_freq": 200,
+        "save_checkpoint_freq": 200,
+        "print_freq": 50,
+        "optimizer": {
+            "type": "adam",
+            "lr": 1e-5
+        },
+        "ema_scheduler": { // not used now
+            "step_start_ema": 5000,
+            "update_ema_every": 1,
+            "ema_decay": 0.9999
+        }
+    },
+    "wandb": {
+        "project": "sr_ffhq"
+    }
+}
