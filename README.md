@@ -1,4 +1,4 @@
-# 项目名称
+# HSI-DMGESR说明文档
 This is the raw source code of the paper 'Enhancing Hyperspectral Images via Diffusion Model and Group-Autoencoder Super-Resolution Network' Our code is based on SR3, SSPSR GELIN
 代码主要分为两个阶段，阶段1训练GAE，阶段2联合训练Diffusion model。在子文件AE.py训练GAE，训练完成后，配置好config文件，导入正确的训练集路径后，训练扩散模型，运行sr_gae.py。
 
