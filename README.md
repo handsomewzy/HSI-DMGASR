@@ -1,4 +1,5 @@
 # HSI-DMGASR (AAAI2024) Documentation
+(Zhaoyang Wang, Dongyang Li, Mingyang Zhang†, Hao Luo, Maoguo Gong)
 This repository contains the source code for the paper "Enhancing Hyperspectral Images via Diffusion Model and Group-Autoencoder Super-Resolution Network". The code is based on SR3, SSPSR, and GELIN. The implementation is divided into two main stages:
 1. Training the Group-Autoencoder (GAE)
 2. Joint Training with the Diffusion Model
@@ -9,15 +10,21 @@ This repository contains the source code for the paper "Enhancing Hyperspectral 
 ---
 
 > *Existing hyperspectral image (HSI) super-resolution (SR)
-methods struggle to effectively capture the complex spectralspatial relationships and low-level details, while diffusion
+methods struggle to effectively capture the complex spectral-spatial relationships and low-level details, while diffusion
 models represent a promising generative model known for
-their exceptional performance in modeling complex relations and learning high and low-level visual features. The
-direct application of diffusion models to HSI SR is hampered by challenges such as diffculties in model convergence and protracted inference time. In this work, we introduce a novel Group-Autoencoder (GAE) framework that
-synergistically combines with the diffusion model to construct a highly effective HSI SR model (DMGASR). Our proposed GAE framework encodes high-dimensional HSI data
+their exceptional performance in modeling complex relations and learning high and low-level visual features. The
+direct application of diffusion models to HSI SR is hampered by challenges such as diffculties in model convergence and protracted inference time. In this work, we introduce a novel Group-Autoencoder (GAE) framework that
+synergistically combines with the diffusion model to construct a highly effective HSI SR model (DMGASR). Our proposed GAE framework encodes high-dimensional HSI data
 into low-dimensional latent space where the diffusion model
-works, thereby alleviating the diffculty of training the diffusion model while maintaining band correlation and considerably reducing inference time. Experimental results on both
-natural and remote sensing hyperspectral datasets demonstrate that the proposed method is superior to other state-ofthe-art methods both visually and metrically.* 
+works, thereby alleviating the diffculty of training the diffusion model while maintaining band correlation and considerably reducing inference time. Experimental results on both
+natural and remote sensing hyperspectral datasets demonstrate that the proposed method is superior to other state-of-the-art methods both visually and metrically.* 
 ---
+
+## Experiment Results
+![ex1.png](image/ex1.png)
+![ex2.png](image/ex2.png)
+![vis.png](image/vis.png)
+
 
 ## Installation
 To install the required dependencies for the project, run:
