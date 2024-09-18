@@ -1,36 +1,35 @@
-# HSI-DMGASR （AAAI2024）说明文档
-This is the raw source code of the paper 'Enhancing Hyperspectral Images via Diffusion Model and Group-Autoencoder Super-Resolution Network' Our code is based on SR3, SSPSR GELIN
-代码主要分为两个阶段，阶段1训练GAE，阶段2联合训练Diffusion model。在子文件AE.py训练GAE，训练完成后，配置好config文件，导入正确的训练集路径后，训练扩散模型，运行sr_gae.py。
+# HSI-DMGASR (AAAI2024) Documentation
+This repository contains the source code for the paper "Enhancing Hyperspectral Images via Diffusion Model and Group-Autoencoder Super-Resolution Network". The code is based on SR3, SSPSR, and GELIN. The implementation is divided into two main stages:
+1. Training the Group-Autoencoder (GAE)
+2. Joint Training with the Diffusion Model
 
-## 安装
-安装项目所需的依赖库：
+## Installation
+To install the required dependencies for the project, run:
 
 ```
 pip install -r requirements.txt
 ```
 
-## 使用说明
-### 训练GAE
-配置好数据集路径信息后，运行如下代码：
+## Usage Instructions
+### Training the GAE
+After configuring the dataset paths, execute the following command to train the GAE:
 
 ```
 python AE.py
 ```
 
-### 训练扩散模型Diffusion model
-配置好数据集路径信息，GAE加载预训练模型。（具体其余参数配置在config文件中，位置在：EHSI-DMGESR/config/sr_sr3_16_128.json，直接运行如下代码即可：
+### Training the Diffusion Model
+Once the GAE is trained and the dataset paths are configured, load the pre-trained GAE model and train the diffusion model by running:
 
 ```
 python sr_gae.py
 ```
-在sr_gae.py中可以更改是训练还是推理。
+In sr_gae.py, you can switch between training and inference modes.
 
-## 参数具体配置
-配置文件config参考格式在：EHSI-DMGESR/config/sr_sr3_16_128.json，数据集的具体读取在对应的 AE.py 与 sr_gae.py 文件中进行配置。
-具体的，前后实验中有两种数据处理方式：
-1. 使用TrainsetFromFolder函数，参考MCNet中的数据处理方式，使用matlab本地处理数据集后，直接进行读取。
-2. 使用HSTrainingData，HSTestData函数，加载数据后线上处理数据，灵活性更强。
-具体的细节与使用方法参考两个函数的定义。
+## Configuration Details
+The configuration file for training is located at EHSI-DMGESR/config/sr_sr3_16_128.json. Dataset paths and other parameters are set within this file. There are two data processing methods used in the experiments:
+1. Using TrainsetFromFolder: This method follows the data processing approach from MCNet. After processing the dataset locally with MATLAB, the data is read directly.
+2. Using HSTrainingData and HSTestData: These functions handle data processing online, providing greater flexibility. Refer to the definitions of these functions for detailed usage.
 
-## 说明
-本项目主要基于SR3，SSPSR，MCNet等代码开发。
+## Notes
+This project is primarily based on the SR3, SSPSR, and MCNet frameworks.
