@@ -4,7 +4,7 @@ This repository contains the source code for the paper "Enhancing Hyperspectral 
 2. Joint Training with the Diffusion Model
 
 ## Network Architecture
-![image.png](stage.pdf)
+![stage.pdf](stage.pdf)
 
 ## Installation
 To install the required dependencies for the project, run:
