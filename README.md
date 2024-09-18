@@ -4,7 +4,20 @@ This repository contains the source code for the paper "Enhancing Hyperspectral 
 2. Joint Training with the Diffusion Model
 
 ## Network Architecture
-![stage.pdf](stage.pdf)
+![stage.png](image/stage.png)
+
+---
+
+> *Existing hyperspectral image (HSI) super-resolution (SR)
+methods struggle to effectively capture the complex spectralspatial relationships and low-level details, while diffusion
+models represent a promising generative model known for
+their exceptional performance in modeling complex relations and learning high and low-level visual features. The
+direct application of diffusion models to HSI SR is hampered by challenges such as diffculties in model convergence and protracted inference time. In this work, we introduce a novel Group-Autoencoder (GAE) framework that
+synergistically combines with the diffusion model to construct a highly effective HSI SR model (DMGASR). Our proposed GAE framework encodes high-dimensional HSI data
+into low-dimensional latent space where the diffusion model
+works, thereby alleviating the diffculty of training the diffusion model while maintaining band correlation and considerably reducing inference time. Experimental results on both
+natural and remote sensing hyperspectral datasets demonstrate that the proposed method is superior to other state-ofthe-art methods both visually and metrically.* 
+---
 
 ## Installation
 To install the required dependencies for the project, run:
